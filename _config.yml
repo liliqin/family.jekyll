@@ -4,3 +4,8 @@ pygments: true
 
 name: Li Qinqi
 
+lychee:
+  url: http://gallery.liqinqi.com
+  album_title_tag: h1
+  link_big_to: lychee
+
