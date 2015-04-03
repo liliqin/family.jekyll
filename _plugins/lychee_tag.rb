@@ -18,7 +18,7 @@
 # # Default configuration (override in _config.yml)
 #
 #   lychee:
-#     url: http://electerious.com/lychee_demo
+#     url: http://electerious.com/lychee_demo/
 #     album_title_tag: h1
 #     link_big_to: lychee
 #     cache_folder: _lychee_cache
@@ -52,12 +52,12 @@ module Jekyll
       # set default values
       @config['album_title_tag'] ||= 'h1'
       @config['link_big_to']     ||= 'lychee'
-      @config['url']             ||= 'http://electerious.com/lychee_demo'
+      @config['url']             ||= 'http://electerious.com/lychee_demo/'
       @config['cache_folder']    ||= '_lychee_cache'
 
       # construct class wide usable variables
-      @thumb_url = @config['url'] + "/uploads/thumb/"
-      @big_url = @config['url'] + "/uploads/big/"
+      @thumb_url = @config['url'] # + "/uploads/thumb/"
+      @big_url = @config['url'] # + "/uploads/big/"
       @album_id = @params
 
       # initialize caching
@@ -72,7 +72,7 @@ module Jekyll
       api_url = @config['url'] + "/php/api.php"
       uri = URI.parse(api_url)
       @http = Net::HTTP.new(uri.host, uri.port)
-      @http.use_ssl = true
+      @http.use_ssl = false
       @request = Net::HTTP::Post.new(uri.request_uri)
       @request['Cookie'] = init_lychee_session
 
