@@ -78,7 +78,8 @@ module Jekyll
 
       album = cached_response(@album_id, 'album') || get_album(@album_id)
       puts "[Lychee Tag] Processing Lychee album id #{@album_id}: '#{album['title']}'"
-      html = "<#{@config['album_title_tag']}>#{album['title']}</#{@config['album_title_tag']}>\n"
+      # html = "<#{@config['album_title_tag']}>#{album['title']}</#{@config['album_title_tag']}>\n"
+      html = ""
       album_content = album['content']
       album_content.each do |photo_id, photo_data|
         big_href = case @config['link_big_to']

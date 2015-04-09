@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Tags
+title: "我的故事"
 ---
 
 Welcome to my homepage. My name is Li Qinqi. 

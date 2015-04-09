@@ -6,6 +6,11 @@ url: "http://liqinqi.com"
 markdown: kramdown
 include: [".htaccess"]
 permalink: /:year/:title.html
+highlighter: pygments
+paginate: 10
+
+# Disqus
+disqus: liqinqi
 
 # Lychee settings
 lychee:
