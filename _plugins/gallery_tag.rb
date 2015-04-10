@@ -1,4 +1,5 @@
-# Connects Jekyll with Lychee (http://lychee.electerious.com/)
+# Connects Jekyll with photo gallery
+# currently support Lychee (http://lychee.electerious.com/)
 #
 # # Features
 #
@@ -7,30 +8,41 @@
 #
 # # Usage
 #
-#   {% lychee_album <album_id> %}
-#   {% lychee_album_no_cache <album_id> %}
+#   {% album <album_id> %}
+#   {% album_no_cache <album_id> %}
+#
+#   {% photo <album_id> <photo_id> %}
+#   {% photo_no_cache <album_id> <photo_id> %}
 #
 # # Example
 #
-#   {% lychee_album 1 %}
-#   {% lychee_album_no_cache 1 %}
+#   {% album 1 %}
+#   {% album_no_cache 1 %}
+#
+#   {% photo 1 14280199474188 %}
+#   {% photo_no_cache 1 14280199474188 %}
 #
 # # Default configuration (override in _config.yml)
 #
-#   lychee:
-#     url: http://electerious.com/lychee_demo/
-#     album_title_tag: h1
-#     link_big_to: lychee
-#     cache_folder: _lychee_cache
+#   gallery:
+#     url: http://gallery.limaoxu.com
+#     path: gallery/
+#     title_tag: h1
+#     link_to: gallery
+#     cache_folder: _gallery_cache
 #
-# Change at least "url" to your own Lychee installation
-# album_title_tag: let's you chose which HTML tag to use around the album title
-# link_big_to: choose "lychee" or "img".
-#   lychee: links the image to the Lychee image view
-#   img: links the image to it's original image
+# Change at least "url" to your own installation
+# title_tag: let's you chose which HTML tag to use around the album title
+# link_to: choose "gallery" or "origin".
+#   gallery: links the image to the gallery image view
+#   origin: links the image to it's original image
 #
 # # Author and license
 #
+# Limlabs <support@limlabs.com> - http://www.limlabs.com
+# License: MIT
+#
+# Based on Lychee Tag
 # Tobias Brunner <tobias@tobru.ch> - https://tobrunet.ch
 # License: MIT
 
@@ -40,25 +52,22 @@ require 'net/https'
 require 'uri'
 
 module Jekyll
-  class LycheeAlbumTag < Liquid::Tag
+  class AlbumTag < Liquid::Tag
     def initialize(tag_name, config, token)
       super
 
       # params coming from the liquid tag
       @params = config.strip
-
-      # get config from _config.yml
-      @config = Jekyll.configuration({})['lychee'] || {}
-      # set default values
-      @config['album_title_tag'] ||= 'h1'
-      @config['link_big_to']     ||= 'lychee'
-      @config['url']             ||= 'http://electerious.com/lychee_demo/'
-      @config['cache_folder']    ||= '_lychee_cache'
-
-      # construct class wide usable variables
-      @thumb_url = @config['url'] # + "/uploads/thumb/"
-      @big_url = @config['url'] # + "/uploads/big/"
       @album_id = @params
+      
+      # get config from _config.yml
+      @config = Jekyll.configuration({})['gallery'] || {}
+      # set default values
+      @config['url']             ||= 'http://gallery.limaoxu.com'
+      @config['path']            ||= 'gallery/'
+      @config['title_tag']       ||= 'h1'
+      @config['link_to']         ||= 'gallery'
+      @config['cache_folder']    ||= '_gallery_cache'
 
       # initialize caching
       @cache_disabled = false
@@ -68,35 +77,35 @@ module Jekyll
     end
 
     def render(context)
-      # initialize session with Lychee
+      # initialize session with gallery
       api_url = @config['url'] + "/php/api.php"
       uri = URI.parse(api_url)
       @http = Net::HTTP.new(uri.host, uri.port)
       @http.use_ssl = false
       @request = Net::HTTP::Post.new(uri.request_uri)
-      @request['Cookie'] = init_lychee_session
+      @request['Cookie'] = init_gallery_session
 
       album = cached_response(@album_id, 'album') || get_album(@album_id)
-      puts "[Lychee Tag] Processing Lychee album id #{@album_id}: '#{album['title']}'"
-      # html = "<#{@config['album_title_tag']}>#{album['title']}</#{@config['album_title_tag']}>\n"
+      puts "[Gallery Tag] Processing album id #{@album_id}: '#{album['title']}'"
+      # html = "<#{@config['title_tag']}>#{album['title']}</#{@config['title_tag']}>\n"
       html = ""
       album_content = album['content']
       album_content.each do |photo_id, photo_data|
-        big_href = case @config['link_big_to']
-          when "img"
+        big_href = case @config['link_to']
+          when "origin"
             photo_data = cached_response(photo_id, 'photo') || get_photo(@album_id, photo_id)
-            @big_url + photo_data['url']
-          when "lychee" then @config['url'] + "#" + @album_id + "/" + photo_id
+            @config['path'] + photo_data['url']
+          when "gallery" then @config['path'] + "#" + @album_id + "/" + photo_id
           else "#"
         end
-        html << "<a href=\"#{big_href}\" title=\"#{photo_data['title']}\"><img src=\"#{@thumb_url}#{photo_data['thumbUrl']}\"/></a>\n"
+        html << "<a href=\"#{big_href}\" title=\"#{photo_data['title']}\"><img src=\"#{@config['path']}#{photo_data['thumbUrl']}\"/></a>\n"
       end
       return html
     end
 
     # Caching
     def cache(id, type, data)
-      puts "[Lychee Tag] Caching Lychee #{type} id #{id}"
+      puts "[Gallery Tag] Caching #{type} id #{id}"
       cache_file = cache_file_for(id, type)
       File.open(cache_file, "w") do |f|
         f.write(data)
@@ -115,8 +124,8 @@ module Jekyll
     end
 
 
-    # Lychee API mapping
-    def init_lychee_session
+    # Gallery API mapping
+    def init_gallery_session
       # construct request
       @request.set_form_data({'function' => 'init'})
       # send request now and save cookies
@@ -141,7 +150,7 @@ module Jekyll
     end
   end
 
-  class LycheeAlbumTagNoCache < LycheeAlbumTag
+  class AlbumTagNoCache < AlbumTag
     def initialize(tag_name, config, token)
       super
       @cache_disabled = true
@@ -149,5 +158,5 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_tag('lychee_album', Jekyll::LycheeAlbumTag)
-Liquid::Template.register_tag('lychee_album_no_cache', Jekyll::LycheeAlbumTagNoCache)
+Liquid::Template.register_tag('album', Jekyll::AlbumTag)
+Liquid::Template.register_tag('album_no_cache', Jekyll::AlbumTagNoCache)

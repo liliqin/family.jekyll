@@ -7,5 +7,5 @@ tags:
 - 太浩湖
 --- 
 
-{% lychee_album 3 %}
+{% album 3 %}
 

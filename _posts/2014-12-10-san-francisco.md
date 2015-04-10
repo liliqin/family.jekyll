@@ -9,4 +9,4 @@ tags:
 
 Some photos taken at Golden Gate Bridge and Pier 39. 
 
-{% lychee_album 4 %}
+{% album 4 %}
