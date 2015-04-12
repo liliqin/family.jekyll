@@ -16,6 +16,6 @@ gallery:
     url: http://gallery.limaoxu.com
     path: gallery/
     title_tag: h1
-    link_to: origin
+    link_to: gallery
     cache_folder: _gallery_cache
     

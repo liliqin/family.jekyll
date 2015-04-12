@@ -1,11 +1,15 @@
 
+RewriteOptions inherit
 RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^qinlili\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.qinlili\.com$
+RewriteRule ^gallery\/?(.*)$ "http\:\/\/gallery\.qinlili\.com\/$1" [R=302,L]
+
 RewriteCond %{HTTP_HOST} ^liqinqi\.com$ [OR]
 RewriteCond %{HTTP_HOST} ^www\.liqinqi\.com$
-RewriteRule ^gallery\/?(.*)$ "http\:\/\/gallery\.liqinqi\.com\/$1" [R=301,L]
+RewriteRule ^gallery\/?(.*)$ "http\:\/\/gallery\.liqinqi\.com\/$1" [R=302,L]
 
-
-RewriteOptions inherit
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ $1.html
