@@ -1,4 +1,4 @@
-liqinqi.com
-===========
+Family Homepage
+===============
 
-Personal website for Li Qinqi.
+Family website for Li Maoxu, Qin Lili, and Li Qinqi.

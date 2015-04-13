@@ -1,5 +1,5 @@
 # Site settings
-title: 我爱我家
+title: Family Blog
 years: 2012-2014
 
 # Build settings
@@ -14,7 +14,7 @@ disqus: liqinqi
 # Gallery
 gallery:
     url: http://gallery.limaoxu.com
-    path: gallery/
+    path: /gallery/
     title_tag: h1
     link_to: gallery
     cache_folder: _gallery_cache

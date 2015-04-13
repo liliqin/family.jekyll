@@ -64,7 +64,7 @@ module Jekyll
       @config = Jekyll.configuration({})['gallery'] || {}
       # set default values
       @config['url']             ||= 'http://gallery.limaoxu.com'
-      @config['path']            ||= 'gallery/'
+      @config['path']            ||= '/gallery/'
       @config['title_tag']       ||= 'h1'
       @config['link_to']         ||= 'gallery'
       @config['cache_folder']    ||= '_gallery_cache'
@@ -98,7 +98,7 @@ module Jekyll
           when "gallery" then @config['path'] + "#" + @album_id + "/" + photo_id
           else "#"
         end
-        html << "<a href=\"#{big_href}\" title=\"#{photo_data['title']}\"><img src=\"#{@config['path']}#{photo_data['thumbUrl']}\"/></a>\n"
+        html << "<a href=\"#{big_href}\" title=\"#{photo_data['title']}\"><img src=\"#{@config['path']}#{photo_data['thumbUrl']}\"/></a>"
       end
       return html
     end
