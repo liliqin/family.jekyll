@@ -1,4 +1,39 @@
-.site-banner {	
+/**
+ * Site header
+ */
+.site-header {
+	padding-top: 40px;
+	border-bottom: 1px solid $grey-color-light;
+    // Positioning context for the mobile navigation icon
+    position: relative;
+	text-align: center;
+	
+	@include media-query($on-palm) {
+		padding-top: 0;
+		height: 56px;
+	}
+}
+
+.site-title {
+
+	font-family: 'Miss Fajardose', cursive;
+	font-size: 46px;
+
+ 	@include media-query($on-palm) {
+		float: left;
+		font-size: 30px;
+		line-height: 56px;
+	}
+}
+
+.site-banner {
+	padding-top: 10px;
+	padding-bottom:80px; /* at leat the height of background image 34px */
+	background-image: url('/images/border.png');
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-height: 34px;
+		
 	@include media-query($on-palm) {
 		display: none;
 	}
@@ -10,45 +45,10 @@
 	border: none;
 }
 
-/**
- * Site header
- */
-.site-header {
-	padding-top:15px; /* the height of background image */
-	background-image: url('/images/border.gif');
-	background-repeat: repeat-x;
-	background-position: top;
-	border-bottom: 1px solid $grey-color-light;
-    // Positioning context for the mobile navigation icon
-    position: relative;
-	text-align: center;
-	
-	@include media-query($on-palm) {
-		padding: 0;
-		background-image: none;
-		height: 56px;
-	}
-}
-
-.site-title {
-	display: none; 
-
-    &,
-    &:visited {
-        color: $grey-color-dark;
-    }
-
- 	@include media-query($on-palm) {
-		display: inherit;
-		float: left;
-		font-size: 26px;
-		line-height: 56px;
-		letter-spacing: -1px;
-	}
-}
-
 .site-nav {
 
+	padding-top: 10px;
+	
     .menu-icon {
         display: none;
     }
@@ -63,18 +63,18 @@
         }
     }
 
-	.left {
+	div.left {
 		float: left;
 	}
 	
-	.right {
+	div.right {
 		float: right;
 	}
 
     @include media-query($on-palm) {
 		float: right;
+		padding-top: 0;
 		line-height: 56px;
-		margin: 0;
         position: absolute;
         top: 9px;
         right: 15px;
@@ -117,11 +117,11 @@
             padding: 5px 10px;
         }
 
-		.left {
+		div.left {
 			clear: both;
 		}
 		
-		.right {
+		div.right {
 			clear: both;
 		}
     }
@@ -133,6 +133,7 @@
  * Site footer
  */
 .site-footer {
+	text-align: left;
     border-top: 1px solid $grey-color-light;
     padding: 0.5em 0 1em 0;
 }
@@ -141,6 +142,7 @@
  * Page content
  */
 .page-content {
+	text-align: left;
     padding: 1em 0;
 }
 

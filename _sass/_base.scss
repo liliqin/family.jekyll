@@ -21,6 +21,7 @@ body {
     color: $text-color;
     background-color: $background-color;
     -webkit-text-size-adjust: 100%;
+	text-align:center; /* Necessary for IE 6,7,8 */
 }
 
 
@@ -45,6 +46,9 @@ img {
     vertical-align: middle;
 }
 
+a img {
+	border:none; /* necessary for IE 6-10 */
+}
 
 
 /**

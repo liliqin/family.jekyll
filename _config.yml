@@ -1,5 +1,5 @@
 # Site settings
-title: Family Blog
+title: My Family My Life
 years: 2012-2014
 
 # Build settings
@@ -9,7 +9,7 @@ permalink: /:year/:title.html
 paginate: 10
 
 # Disqus
-disqus: liqinqi
+disqus: qinlili
 
 # Gallery
 gallery:
