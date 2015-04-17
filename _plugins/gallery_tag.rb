@@ -98,7 +98,7 @@ module Jekyll
           when "gallery" then @config['path'] + "#" + @album_id + "/" + photo_id
           else "#"
         end
-        html << "<a href=\"#{big_href}\" title=\"#{photo_data['title']}\"><img src=\"#{@config['path']}#{photo_data['thumbUrl']}\"/></a>"
+        html << "<a href=\"#{big_href}\" title=\"#{photo_data['title']}\" target=\"_blank\"><img src=\"#{@config['path']}#{photo_data['thumbUrl']}\"/></a>"
       end
       return html
     end
