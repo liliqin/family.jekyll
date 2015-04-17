@@ -6,7 +6,7 @@ years: 2012-2014
 markdown: kramdown
 include: [".htaccess"]
 permalink: /:year/:title.html
-paginate: 10
+paginate: 5
 
 # Disqus
 disqus: qinlili

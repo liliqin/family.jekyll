@@ -3,7 +3,7 @@
     	<h1 class="site-title">{{ site.title }}</h1>
 	</div>
 
-	{% if page.title == "Home" %}
+	{% if page.title == "Home" and paginator.page == 1 %}
 	<div class="site-banner">
 		{% album 1 %}
 	</div>
